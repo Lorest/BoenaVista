@@ -1,0 +1,82 @@
+﻿<Window x:Class="BoenaVista.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BoenaVista"
+        xmlns:vm="clr-namespace:BoenaVista.Viewmodel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainViewmodel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Name="menuWidth"  Width="200px" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <!--<GridSplitter ResizeDirection="Rows" Grid.Row="1" Height="5" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>-->
+                <Button Style="{StaticResource StyleButton}" Grid.Row="2" Command="{Binding ChangePage}" CommandParameter="Accueil">Accueil</Button>
+                <Button Style="{StaticResource StyleButton}" Grid.Row="3" Command="{Binding ChangePage}" CommandParameter="Intervention">Nouvelle Intervention</Button>
+                <Button Style="{StaticResource StyleButton}" Grid.Row="4" Command="{Binding ChangePage}" CommandParameter="Machine">Ajouter une machine</Button>
+                <Button Style="{StaticResource StyleButton}" Grid.Row="5" Command="{Binding ChangePage}" CommandParameter="Planning">Planning</Button>
+            </Grid>
+        </ScrollViewer>
+
+        <Grid Grid.Column="2">
+            <Frame Source="{Binding Path=PageView, Mode=TwoWay}" NavigationUIVisibility="Hidden" Padding="20">
+
+            </Frame>
+        </Grid>
+        <Button VerticalAlignment="Top" FontFamily="Marlett" FontSize="20" Content="3"
+                Visibility="{Binding HideMenuButton}"
+                Command="{Binding ChangeShowMenuButton}"
+                Style="{StaticResource StyleButton}"
+                Height="40" Width="40" Grid.Column="1">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                    Storyboard.TargetName="menuWidth"
+                                    Storyboard.TargetProperty="MaxWidth"
+                                    From="200" To="0" Duration="0:0:0.5" 
+                                    AutoReverse="False" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+        <Button VerticalAlignment="Top"  FontFamily="Marlett" FontSize="20" Content="4"
+                Visibility="{Binding Path=ShowMenuButton, Converter={StaticResource VisibleIfTrueConverter} }"
+                Command="{Binding ChangeShowMenuButton}"
+                Style="{StaticResource StyleButton}"
+                Height="40" Width="40" Grid.Column="1">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                    Storyboard.TargetName="menuWidth"
+                                    Storyboard.TargetProperty="MaxWidth"
+                                    From="0" To="200" Duration="0:0:0.5" 
+                                    AutoReverse="False" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+</Window>

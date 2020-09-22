@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoenaVista", "BoenaVista\BoenaVista.csproj", "{D7E2367B-744C-4149-BD96-4297E22EB527}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7E2367B-744C-4149-BD96-4297E22EB527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E2367B-744C-4149-BD96-4297E22EB527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E2367B-744C-4149-BD96-4297E22EB527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E2367B-744C-4149-BD96-4297E22EB527}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {120D5138-C046-4667-8511-68EC65162685}
+	EndGlobalSection
+EndGlobal

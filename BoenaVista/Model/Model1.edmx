@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BoenaVistaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Intervention">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="DateFin" Type="datetime" />
+          <Property Name="Id_Technicien" Type="int" />
+          <Property Name="Id_Machine" Type="int" />
+        </EntityType>
+        <EntityType Name="Machine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Machine_Tech">
+          <Key>
+            <PropertyRef Name="Id_Technicien" />
+            <PropertyRef Name="Id_Machine" />
+          </Key>
+          <Property Name="Id_Technicien" Type="int" Nullable="false" />
+          <Property Name="Id_Machine" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Technicien">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="50" />
+          <Property Name="Lastname" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Intervention_Machine">
+          <End Role="Machine" Type="Self.Machine" Multiplicity="0..1" />
+          <End Role="Intervention" Type="Self.Intervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Machine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Intervention">
+              <PropertyRef Name="Id_Machine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Intervention_Technicien">
+          <End Role="Technicien" Type="Self.Technicien" Multiplicity="0..1" />
+          <End Role="Intervention" Type="Self.Intervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Technicien">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Intervention">
+              <PropertyRef Name="Id_Technicien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Machine_Tech_Machine">
+          <End Role="Machine" Type="Self.Machine" Multiplicity="1" />
+          <End Role="Machine_Tech" Type="Self.Machine_Tech" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Machine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Machine_Tech">
+              <PropertyRef Name="Id_Machine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Machine_Tech_Technicien">
+          <End Role="Technicien" Type="Self.Technicien" Multiplicity="1" />
+          <End Role="Machine_Tech" Type="Self.Machine_Tech" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Technicien">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Machine_Tech">
+              <PropertyRef Name="Id_Technicien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BoenaVistaModelStoreContainer">
+          <EntitySet Name="Intervention" EntityType="Self.Intervention" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Machine" EntityType="Self.Machine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Machine_Tech" EntityType="Self.Machine_Tech" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Technicien" EntityType="Self.Technicien" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Intervention_Machine" Association="Self.FK_Intervention_Machine">
+            <End Role="Machine" EntitySet="Machine" />
+            <End Role="Intervention" EntitySet="Intervention" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intervention_Technicien" Association="Self.FK_Intervention_Technicien">
+            <End Role="Technicien" EntitySet="Technicien" />
+            <End Role="Intervention" EntitySet="Intervention" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Machine_Tech_Machine" Association="Self.FK_Machine_Tech_Machine">
+            <End Role="Machine" EntitySet="Machine" />
+            <End Role="Machine_Tech" EntitySet="Machine_Tech" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Machine_Tech_Technicien" Association="Self.FK_Machine_Tech_Technicien">
+            <End Role="Technicien" EntitySet="Technicien" />
+            <End Role="Machine_Tech" EntitySet="Machine_Tech" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BoenaVistaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BoenaVistaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Intervention" EntityType="BoenaVistaModel.Intervention" />
+          <EntitySet Name="Machine" EntityType="BoenaVistaModel.Machine" />
+          <EntitySet Name="Technicien" EntityType="BoenaVistaModel.Technicien" />
+          <AssociationSet Name="Machine_Tech" Association="BoenaVistaModel.Machine_Tech">
+            <End Role="Machine" EntitySet="Machine" />
+            <End Role="Technicien" EntitySet="Technicien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intervention_Machine" Association="BoenaVistaModel.FK_Intervention_Machine">
+            <End Role="Machine" EntitySet="Machine" />
+            <End Role="Intervention" EntitySet="Intervention" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intervention_Technicien" Association="BoenaVistaModel.FK_Intervention_Technicien">
+            <End Role="Technicien" EntitySet="Technicien" />
+            <End Role="Intervention" EntitySet="Intervention" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Intervention">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="DateFin" Type="DateTime" Precision="3" />
+          <Property Name="Id_Technicien" Type="Int32" />
+          <Property Name="Id_Machine" Type="Int32" />
+          <NavigationProperty Name="Machine" Relationship="BoenaVistaModel.FK_Intervention_Machine" FromRole="Intervention" ToRole="Machine" />
+          <NavigationProperty Name="Technicien" Relationship="BoenaVistaModel.FK_Intervention_Technicien" FromRole="Intervention" ToRole="Technicien" />
+        </EntityType>
+        <EntityType Name="Machine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Technicien" Relationship="BoenaVistaModel.Machine_Tech" FromRole="Machine" ToRole="Technicien" />
+          <NavigationProperty Name="Intervention" Relationship="BoenaVistaModel.FK_Intervention_Machine" FromRole="Machine" ToRole="Intervention" />
+        </EntityType>
+        <EntityType Name="Technicien">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Machine" Relationship="BoenaVistaModel.Machine_Tech" FromRole="Technicien" ToRole="Machine" />
+          <NavigationProperty Name="Intervention" Relationship="BoenaVistaModel.FK_Intervention_Technicien" FromRole="Technicien" ToRole="Intervention" />
+        </EntityType>
+        <Association Name="Machine_Tech">
+          <End Type="BoenaVistaModel.Machine" Role="Machine" Multiplicity="*" />
+          <End Type="BoenaVistaModel.Technicien" Role="Technicien" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Intervention_Machine">
+          <End Type="BoenaVistaModel.Machine" Role="Machine" Multiplicity="0..1" />
+          <End Type="BoenaVistaModel.Intervention" Role="Intervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Machine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Intervention">
+              <PropertyRef Name="Id_Machine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Intervention_Technicien">
+          <End Type="BoenaVistaModel.Technicien" Role="Technicien" Multiplicity="0..1" />
+          <End Type="BoenaVistaModel.Intervention" Role="Intervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Technicien">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Intervention">
+              <PropertyRef Name="Id_Technicien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BoenaVistaModelStoreContainer" CdmEntityContainer="BoenaVistaEntities">
+          <EntitySetMapping Name="Intervention">
+            <EntityTypeMapping TypeName="BoenaVistaModel.Intervention">
+              <MappingFragment StoreEntitySet="Intervention">
+                <ScalarProperty Name="Id_Machine" ColumnName="Id_Machine" />
+                <ScalarProperty Name="Id_Technicien" ColumnName="Id_Technicien" />
+                <ScalarProperty Name="DateFin" ColumnName="DateFin" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Machine">
+            <EntityTypeMapping TypeName="BoenaVistaModel.Machine">
+              <MappingFragment StoreEntitySet="Machine">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Technicien">
+            <EntityTypeMapping TypeName="BoenaVistaModel.Technicien">
+              <MappingFragment StoreEntitySet="Technicien">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Machine_Tech" TypeName="BoenaVistaModel.Machine_Tech" StoreEntitySet="Machine_Tech">
+            <EndProperty Name="Technicien">
+              <ScalarProperty Name="Id" ColumnName="Id_Technicien" />
+            </EndProperty>
+            <EndProperty Name="Machine">
+              <ScalarProperty Name="Id" ColumnName="Id_Machine" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
